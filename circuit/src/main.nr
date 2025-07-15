@@ -44,10 +44,13 @@ fn YoungGuRuPikadMai(
     assert(is_inside);
 }
 
-// #[test]
-// fn test_main() {
-//     // main(1, 2);
+#[test]
+fn test_main() {
+    main(10, 1,2,3,10 );
+    main(5, 3, 2, 3, 3);
+}
 
-//     // Uncomment to make test fail
-//     // main(1, 1);
-// }
+#[test(should_fail)]
+fn test_main_fail() {
+    main(10, 10, 2, 3, 5);
+}
