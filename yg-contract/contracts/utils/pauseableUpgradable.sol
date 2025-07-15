@@ -19,7 +19,7 @@ abstract contract PausableUpgradeable is Initializable{
       _;
   }
 
-  function __Pausable_initialize() internal initializer {
+  function __Pausable_initialize() internal {
     _paused = false;
   }
 

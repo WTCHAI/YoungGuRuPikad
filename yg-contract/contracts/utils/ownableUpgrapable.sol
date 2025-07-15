@@ -42,7 +42,7 @@ abstract contract OwnableUpgradeable is Initializable {
     function __Ownable_initialize(
         address initilizeOwner,
         address initializeAdmin
-    ) internal initializer {
+    ) internal {
         _transferOwnership(initilizeOwner);
         _setAdmin(initializeAdmin);
     }

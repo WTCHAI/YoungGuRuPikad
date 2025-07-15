@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.29;
+pragma solidity ^0.8.28;
 
 import { Initializable } from "./utils/initializer.sol";
 import { OwnableUpgradeable } from "./utils/ownableUpgrapable.sol";
@@ -68,6 +68,12 @@ contract YoungGuRuPikadProxy is Initializable, OwnableUpgradeable, PausableUpgra
           
         emit DekGenProof(_key, targetVerifier, msg.sender, result);
         return result;
+    }
+
+    function verifierConfiguration(bytes32 _key, address _verifier) external {
+        require(_verifier != address(0), "Invalid verifier address");
+        verifiers[_key] = _verifier;
+        emit VerifierConfigured(_key, _verifier, msg.sender);
     }
 
     uint256[100] private __gap;
