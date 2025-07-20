@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.29;
 
+import { Initializable } from "./utils/initializer.sol";
 import { OwnableUpgradeable } from "./utils/ownableUpgrapable.sol";
 import { PausableUpgradeable } from "./utils/pauseableUpgradable.sol";
 
@@ -8,7 +9,7 @@ interface IPikadVerifier {
     function verify(bytes calldata _proof, bytes32[] calldata _publicInputs) external view returns (bool);
 }
 
-contract YoungGuRuPikadProxy is IPikadVerifier, OwnableUpgradeable, PausableUpgradeable {
+contract YoungGuRuPikadProxy is Initializable, OwnableUpgradeable, PausableUpgradeable {
     mapping(bytes32 => address) public verifiers;
     mapping(bytes32 => mapping(address => bool)) public provers;
 
@@ -26,7 +27,7 @@ contract YoungGuRuPikadProxy is IPikadVerifier, OwnableUpgradeable, PausableUpgr
         bool _result
     );
 
-    function intialize(address _owner, address _admin) external initializer {
+    function initialize(address _owner, address _admin) external initializer {
         __Ownable_initialize(_owner, _admin);
         __Pausable_initialize();
     }
@@ -41,7 +42,6 @@ contract YoungGuRuPikadProxy is IPikadVerifier, OwnableUpgradeable, PausableUpgr
 
     function verifyMia(
         bytes32 _key,
-        address _verifier,
         bytes calldata _proof,
         bytes32[] calldata _publicInputs
     ) external whenNotPaused returns (bool) {
@@ -49,14 +49,13 @@ contract YoungGuRuPikadProxy is IPikadVerifier, OwnableUpgradeable, PausableUpgr
         require(targetVerifier != address(0), "Verifier not configured for this key");
         require(targetVerifier == verifiers[_key], "Invalid verifier address");
         
-        bool result = IPikadVerifier(verifier).verify(_proof, _publicInputs);
+        bool result = IPikadVerifier(targetVerifier).verify(_proof, _publicInputs);
         emit MiaGenProof(_key, targetVerifier, msg.sender, result);
         return result;
     }
 
     function verifyDek(
         bytes32 _key,
-        address _verifier,
         bytes calldata _proof,
         bytes32[] calldata _publicInputs
     ) external whenNotPaused returns (bool) {
@@ -67,7 +66,7 @@ contract YoungGuRuPikadProxy is IPikadVerifier, OwnableUpgradeable, PausableUpgr
         bool result = IPikadVerifier(targetVerifier).verify(_proof, _publicInputs);
         provers[_key][msg.sender] = result;
           
-        emit MiaGenProof(_key, targetVerifier, msg.sender, result);
+        emit DekGenProof(_key, targetVerifier, msg.sender, result);
         return result;
     }
 
