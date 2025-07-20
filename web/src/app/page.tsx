@@ -1,20 +1,54 @@
 "use client"
 
-import { AccountSection } from "@/components/account-section"
-import { MarketSection } from "@/components/market-section"
-import { Navbar } from "@/components/navbar"
-import { PositionSection } from "@/components/position-section"
+import { useState } from "react"
+import dynamic from "next/dynamic"
+
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import PopoverDatePicker from "@/components/popover-date-picker"
+import { useLocationStore } from "@/store/location"
+
+const MapContainer = dynamic(() => import("@/components/map/map-container"), {
+  loading: () => <div>Loading map...</div>,
+  ssr: false,
+})
 
 export default function Home() {
+  const selectedLocation = useLocationStore((state) => state.selectedLocation)
+  const [radius, setRadius] = useState<number | undefined>(5) // Default radius in km
+
+  const handleGenProof = () => {
+    console.log("Generating proof with radius:", radius)
+  }
+
   return (
-    <main className="container space-y-4 py-4">
-      <Navbar />
-      <div className="flex gap-6 *:space-y-4">
-        <div className="flex-1 space-y-8">
-          <MarketSection className="w-full flex-1 space-y-4" />
-          <PositionSection />
+    <main className="container flex h-screen flex-col space-y-6 p-6">
+      <div className="flex items-center justify-center space-x-4">
+        <div className="flex gap-3">
+          <Label>Date</Label>
+          <PopoverDatePicker />
         </div>
-        <AccountSection className="w-[360px] shrink-0" />
+
+        <div className="flex gap-3">
+          <Label htmlFor="radius">Radius</Label>
+          <Input
+            id="radius"
+            type="number"
+            step="any"
+            placeholder="Radius (km)"
+            value={radius}
+            onChange={(e) => setRadius(parseFloat(e.target.value))}
+          />
+        </div>
+      </div>
+
+      <div className="relative z-0 flex flex-1">
+        <MapContainer center={selectedLocation} zoom={15} />
+      </div>
+
+      <div className="flex justify-center">
+        <Button onClick={handleGenProof}>Gen Proof</Button>
       </div>
     </main>
   )

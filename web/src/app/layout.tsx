@@ -1,3 +1,5 @@
+import "leaflet/dist/leaflet.css"
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
 import "@/styles/globals.css"
 
 import type { Metadata, Viewport } from "next"
@@ -89,7 +91,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           disableTransitionOnChange
         >
           <Providers initialState={initialState}>{children}</Providers>
