@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
+import { LatLngExpression } from "leaflet"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -17,14 +18,24 @@ const MapContainer = dynamic(() => import("@/components/map/map-container"), {
 export default function Home() {
   const selectedLocation = useLocationStore((state) => state.selectedLocation)
   const [radius, setRadius] = useState<number | undefined>(5) // Default radius in km
+  const [markedPosition, setMarkedPosition] = useState<
+    LatLngExpression | undefined
+  >()
+  const selectedDate = useLocationStore((state) => state.selectedDate)
 
   const handleGenProof = () => {
-    console.log("Generating proof with radius:", radius)
+    console.log("Radius:", radius)
+    console.log("Marked Position:", markedPosition)
+    console.log("Selected Location:", selectedLocation)
+  }
+
+  const handleRemoveMarkedPosition = () => {
+    setMarkedPosition(undefined)
   }
 
   return (
     <main className="container flex h-screen flex-col space-y-6 p-6">
-      <div className="flex items-center justify-center space-x-4">
+      <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
         <div className="flex gap-3">
           <Label>Date</Label>
           <PopoverDatePicker />
@@ -41,14 +52,28 @@ export default function Home() {
             onChange={(e) => setRadius(parseFloat(e.target.value))}
           />
         </div>
+
+        <Button onClick={handleRemoveMarkedPosition} disabled={!markedPosition}>
+          Remove Marked Position
+        </Button>
       </div>
 
       <div className="relative z-0 flex flex-1">
-        <MapContainer center={selectedLocation} zoom={15} />
+        <MapContainer
+          center={selectedLocation}
+          zoom={15}
+          markedPosition={markedPosition}
+          onMarkPositionChange={setMarkedPosition}
+        />
       </div>
 
       <div className="flex justify-center">
-        <Button onClick={handleGenProof}>Gen Proof</Button>
+        <Button
+          onClick={handleGenProof}
+          disabled={!markedPosition || !radius || radius <= 0}
+        >
+          Gen Proof
+        </Button>
       </div>
     </main>
   )

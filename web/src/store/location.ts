@@ -21,14 +21,19 @@ type LocationStore = {
   selectedDate: Date | undefined
 }
 
+const today = new Date()
+const todayKey = today.toLocaleDateString("sv-SE")
+
 export const useLocationStore = create<LocationStore>()(
   devtools((set) => ({
-    selectedDate: new Date(),
-    selectedLocation: [13.7563, 100.5018], // Default to Bangkok
+    selectedDate: today,
+    selectedLocation: dataLocationMap[todayKey] || [13.7466, 100.5395], // Default to Central World
     actions: {
       setSelectedDate: (date) => {
         set({ selectedDate: date })
-        const location = dataLocationMap[date.toISOString().split("T")[0]]
+        const key = date.toLocaleDateString("sv-SE")
+        
+        const location = dataLocationMap[key]
         if (location) {
           set({ selectedLocation: location })
         }
