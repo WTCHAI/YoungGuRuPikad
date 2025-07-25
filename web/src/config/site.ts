@@ -1,7 +1,7 @@
 import { env } from "@/env.mjs"
 
 export const siteConfig = {
-  name: "qqqqwe",
+  name: "YoungGUuRuPikad",
   author: "---",
   description: "eljkhgroi;jqsg",
   keywords: [],
