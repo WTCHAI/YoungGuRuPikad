@@ -1,5 +1,5 @@
 import { cookieStorage, createConfig, createStorage, http } from "wagmi"
-import { sepolia } from "wagmi/chains"
+import { sepolia, scrollSepolia } from "wagmi/chains"
 
 export const config = createConfig({
   storage: createStorage({
@@ -7,8 +7,9 @@ export const config = createConfig({
   }),
   transports: {
     [sepolia.id]: http(),
+    [scrollSepolia.id]: http(),
   },
-  chains: [sepolia],
+  chains: [sepolia, scrollSepolia],
   ssr: true, // If your dApp uses server side rendering (SSR)
   batch: {
     multicall: true,

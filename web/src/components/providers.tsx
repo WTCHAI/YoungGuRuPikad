@@ -24,9 +24,19 @@ export function Providers({
   initialState?: State
 }) {
   return (
-    <WagmiProvider config={config} initialState={initialState}>
+    <WagmiProvider config={config} initialState={initialState} reconnectOnMount={true}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider theme={darkTheme()}>{children}</RainbowKitProvider>
+        <RainbowKitProvider 
+          theme={darkTheme({
+            accentColor: "rgba(8, 71, 247, 0.85)",
+            accentColorForeground: "white",
+            borderRadius: "large",
+            fontStack: "system",
+            overlayBlur: "large",
+          })}
+        >
+          {children}
+        </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   )
