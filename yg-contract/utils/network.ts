@@ -1,35 +1,17 @@
-/**
- * Utils สำหรับจัดการ network connection และ provider
- */
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 export class NetworkUtils {
   /**
-   * Network configuration สำหรับ Ethereum networks
+   * Network configuration
    */
   static readonly NETWORKS = {
-    MAINNET: {
-      chainId: 1,
-      name: 'Ethereum Mainnet',
-      rpcUrl: 'https://mainnet.infura.io/v3/',
-      blockExplorer: 'https://etherscan.io'
-    },
     SEPOLIA: {
       chainId: 11155111,
       name: 'Sepolia Testnet',
-      rpcUrl: 'https://sepolia.infura.io/v3/',
+      rpcUrl: process.env.RPC_URL || 'https://sepolia.infura.io/v3/',
       blockExplorer: 'https://sepolia.etherscan.io'
     },
-    GOERLI: {
-      chainId: 5,
-      name: 'Goerli Testnet',
-      rpcUrl: 'https://goerli.infura.io/v3/',
-      blockExplorer: 'https://goerli.etherscan.io'
-    },
-    LOCALHOST: {
-      chainId: 31337,
-      name: 'Localhost',
-      rpcUrl: 'http://127.0.0.1:8545',
-      blockExplorer: ''
-    }
   };
 
   /**

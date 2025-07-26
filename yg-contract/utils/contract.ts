@@ -1,7 +1,6 @@
 import { ethers } from 'ethers';
 import { Address } from 'viem';
 
-// Interface สำหรับ YoungGuRuPikadProxy contract
 export interface IYoungGuRuPikadProxy {
   verifyMia(
     key: string,
@@ -29,19 +28,16 @@ export interface IYoungGuRuPikadProxy {
   provers(key: string, prover: string): Promise<boolean>;
 }
 
-// Type สำหรับ Proof และ Public Inputs
 export interface ProofData {
   proof: string;
   publicInputs: string[];
 }
 
-// Type สำหรับ Verifier Configuration
 export interface VerifierConfig {
   key: string;
   verifier: Address;
 }
 
-// Type สำหรับ Contract Status
 export interface ContractStatus {
   isDeployed: boolean;
   isPaused: boolean;
