@@ -9,8 +9,6 @@ import {
   
   import initNoirC from '@noir-lang/noirc_abi'
   import initACVM from '@noir-lang/acvm_js'
-  import acvm from '@noir-lang/acvm_js/web/acvm_js_bg.wasm?url'
-  import noirc from '@noir-lang/noirc_abi/web/noirc_abi_wasm_bg.wasm?url'
   
   import { CompiledCircuit } from '@noir-lang/types'
   import { CircuitParameter } from '../interface/noir'
@@ -19,10 +17,17 @@ import {
     params: CircuitParameter
   ): Promise<{ proof: Uint8Array; publicInputs: string[] }> {
     try {
-      await Promise.all([initACVM(fetch(acvm)), initNoirC(fetch(noirc))])
-      const noir = new Noir(circuit as CompiledCircuit)
+      const [{ Noir }, { UltraHonkBackend }] = await Promise.all([
+        import("@noir-lang/noir_js"),
+        import("@aztec/bb.js"),
+      ])
+
+      const circuit = await import("../../../yg-circuit/target/circuit.json")
+      const compiledCircuit = circuit.default as CompiledCircuit
+
+      const noir = new Noir(compiledCircuit)
+      const backend = new UltraHonkBackend(compiledCircuit.bytecode)
       await noir.init()
-      const backend = new UltraHonkBackend(circuit.bytecode)
       const inputs = {
         position_x: params.position_x,
         position_y: params.position_y,
