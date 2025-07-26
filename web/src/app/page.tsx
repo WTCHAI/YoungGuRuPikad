@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import PopoverDatePicker from "@/components/popover-date-picker"
 import { useLocationStore } from "@/store/location"
+import { GenerateProof } from "@/utils/generating-proof"
+import { bytesToHex } from "viem"
 
 const MapContainer = dynamic(() => import("@/components/map/map-container"), {
   loading: () => <div>Loading map...</div>,
@@ -21,11 +23,19 @@ export default function Home() {
   const [markedPosition, setMarkedPosition] = useState<
     LatLngExpression | undefined
   >()
-
-  const handleGenProof = () => {
+  const [proofs, setProofs] = useState<{ proof: Uint8Array; publicInputs: string[] } | null>(null)
+  const handleGenProof = async() => {
     console.log("Radius:", radius)
     console.log("Marked Position:", markedPosition)
     console.log("Selected Location:", selectedLocation)
+    const { proof, publicInputs} = await GenerateProof({
+      position_x:  "10",
+      position_y: "1", 
+      radius: "10",
+      target_x: "2",
+      target_y: "3",
+    })
+    setProofs({ proof, publicInputs })
   }
 
   const handleRemoveMarkedPosition = () => {
@@ -76,6 +86,18 @@ export default function Home() {
           Gen Proof
         </Button>
       </div>
+
+      {proofs && (
+        <>
+        <div> 
+            {bytesToHex(proofs.proof)}
+
+        </div>
+        <div>
+          {JSON.stringify(proofs.publicInputs as `0x${string}`[])}
+        </div>
+        </>
+      )}
     </main>
   )
 }

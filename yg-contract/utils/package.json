@@ -1,0 +1,53 @@
+{
+  "name": "yg-contract-utils",
+  "version": "1.0.0",
+  "description": "Utils สำหรับ interact กับ YoungGuRuPikadProxy contract",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "example": "ts-node example.ts"
+  },
+  "keywords": [
+    "ethereum",
+    "contract",
+    "utils",
+    "proof",
+    "verification",
+    "younggurupikad"
+  ],
+  "author": "YoungGuRuPikad Team",
+  "license": "MIT",
+  "dependencies": {
+    "circomlibjs": "^0.1.7",
+    "dotenv": "^17.2.1",
+    "ethers": "^6.0.0",
+    "viem": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/circomlibjs": "^0.1.6",
+    "@types/jest": "^30.0.0",
+    "jest": "^30.0.5",
+    "ts-jest": "^29.4.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "ethers": "^6.0.0",
+    "viem": "^2.0.0"
+  },
+  "files": [
+    "*.ts",
+    "*.js",
+    "*.d.ts"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YoungGuRuPiKad/yg-contract.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YoungGuRuPiKad/yg-contract/issues"
+  },
+  "homepage": "https://github.com/YoungGuRuPiKad/yg-contract#readme"
+}
