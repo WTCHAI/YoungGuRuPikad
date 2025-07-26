@@ -1,0 +1,47 @@
+import {
+    splitHonkProof,
+    UltraHonkBackend,
+    UltraPlonkBackend,
+  } from '@aztec/bb.js'
+  import circuit from '../../../yg-circuit/target/circuit.json'
+  // @ts-ignore
+  import { Noir } from '@noir-lang/noir_js'
+  
+  import initNoirC from '@noir-lang/noirc_abi'
+  import initACVM from '@noir-lang/acvm_js'
+  import acvm from '@noir-lang/acvm_js/web/acvm_js_bg.wasm?url'
+  import noirc from '@noir-lang/noirc_abi/web/noirc_abi_wasm_bg.wasm?url'
+  
+  import { CompiledCircuit } from '@noir-lang/types'
+  import { CircuitParameter } from '../interface/noir'
+  
+  export async function GenerateProof(
+    params: CircuitParameter
+  ): Promise<{ proof: Uint8Array; publicInputs: string[] }> {
+    try {
+      await Promise.all([initACVM(fetch(acvm)), initNoirC(fetch(noirc))])
+      const noir = new Noir(circuit as CompiledCircuit)
+      await noir.init()
+      const backend = new UltraHonkBackend(circuit.bytecode)
+      const inputs = {
+        position_x: params.position_x,
+        position_y: params.position_y,
+        radius: params.radius,
+        target_x: params.target_x,
+        target_y: params.target_y,
+      }
+  
+      const { witness } = await noir.execute(inputs)
+      const { proof, publicInputs } = await backend.generateProof(witness, {
+        keccak: true,
+      })
+      const verified = await backend.verifyProof({ proof, publicInputs })
+      console.log('Proof generated and verified successfully:', verified)
+      console.log(await backend.verifyProof({ proof, publicInputs }))
+      return { proof, publicInputs }
+    } catch (error) {
+      console.log(error)
+      throw error
+    }
+  }
+  

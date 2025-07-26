@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.29;
 
 import {Script, console} from "forge-std/Script.sol";
-import {Counter} from "../src/Counter.sol";
+import {HonkVerifier} from "../src/Verifier.sol";
 
-contract CounterScript is Script {
+contract HonkVerifierScript is Script {
     Counter public counter;
 
     function setUp() public {}
