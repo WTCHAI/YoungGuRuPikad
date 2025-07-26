@@ -13,6 +13,8 @@ import { useLocationStore } from "@/store/location"
 import { GenerateProof } from "@/utils/generating-proof"
 import { bytesToHex } from "viem"
 
+import YouTubeBackgroundMusic from "@/components/YouTubeBackgroundMusic";
+
 const MapContainer = dynamic(() => import("@/components/map/map-container"), {
   loading: () => <div>Loading map...</div>,
   ssr: false,
@@ -92,6 +94,7 @@ export default function Home() {
 
   return (
     <main className="container flex h-screen flex-col space-y-6 p-6">
+      <YouTubeBackgroundMusic />
       <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
         <div className="flex gap-3">
           <Label>Date</Label>
@@ -117,7 +120,7 @@ export default function Home() {
           variant="outline"
         >
           <Navigation size={16} className={isGettingLocation ? 'animate-spin' : ''} />
-          {isGettingLocation ? 'หาตำแหน่ง...' : 'หาตำแหน่งของฉัน'}
+          {isGettingLocation ? 'หาตำแหน่ง...' : 'Find My Location'}
         </Button>
 
         <Button onClick={handleRemoveMarkedPosition} disabled={!markedPosition}>
