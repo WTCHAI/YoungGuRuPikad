@@ -1515,12 +1515,12 @@ library CommitmentSchemeLib {
     }
 }
 
-interface IPikadVerifier {
+interface IVerifier {
     function verify(bytes calldata _proof, bytes32[] calldata _publicInputs) external view returns (bool);
 }
 
 
-abstract contract BaseHonkVerifier is IPikadVerifier {
+abstract contract BaseHonkVerifier is IVerifier {
     using FrLib for Fr;
 
     uint256 immutable n;
@@ -1876,7 +1876,7 @@ abstract contract BaseHonkVerifier is IPikadVerifier {
     }
 }
 
-contract HonkVerifier is BaseHonkVerifier(N, LOG_N, NUMBER_OF_PUBLIC_INPUTS) {
+contract YGVerifier is BaseHonkVerifier(N, LOG_N, NUMBER_OF_PUBLIC_INPUTS) {
      function loadVerificationKey() internal pure override returns (Honk.VerificationKey memory) {
        return HonkVerificationKey.loadVerificationKey();
     }

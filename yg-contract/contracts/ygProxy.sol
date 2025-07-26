@@ -17,13 +17,13 @@ contract YoungGuRuPikadProxy is Initializable, OwnableUpgradeable, PausableUpgra
     event MiaGenProof(
         bytes32 indexed _key,
         address indexed _verifier,
-        address _prover,
+        address indexed _prover,
         bool _result
     );
     event DekGenProof(
         bytes32 indexed _key,
         address indexed _verifier,
-        address _prover,
+        address indexed _prover,
         bool _result
     );
 
