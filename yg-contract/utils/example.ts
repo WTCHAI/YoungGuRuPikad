@@ -7,9 +7,6 @@ import {
   VerifierConfig 
 } from './index';
 
-/**
- * ตัวอย่างการใช้งาน Utils สำหรับ YoungGuRuPikad Contract
- */
 export class ExampleUsage {
   private contractUtils: YoungGuRuPikadUtils;
   private provider: ethers.Provider;
