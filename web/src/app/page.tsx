@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 import { LatLngExpression } from "leaflet"
+import { Navigation } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -19,11 +20,57 @@ const MapContainer = dynamic(() => import("@/components/map/map-container"), {
 
 export default function Home() {
   const selectedLocation = useLocationStore((state) => state.selectedLocation)
+  const setSelectedLocation = useLocationStore((state) => state.actions.setSelectedLocation)
   const [radius, setRadius] = useState<number | undefined>(1) // Default radius in km
   const [markedPosition, setMarkedPosition] = useState<
     LatLngExpression | undefined
   >()
+  const [isGettingLocation, setIsGettingLocation] = useState(false)
+  const [locationError, setLocationError] = useState<string | null>(null)
   const [proofs, setProofs] = useState<{ proof: Uint8Array; publicInputs: string[] } | null>(null)
+  const [mapKey, setMapKey] = useState(0) // เพื่อ force re-render map
+
+  const handleGetUserLocation = () => {
+    if (!navigator.geolocation) {
+      setLocationError('Geolocation is not supported by this browser')
+      return
+    }
+
+    setIsGettingLocation(true)
+    setLocationError(null)
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords
+        const newLocation: LatLngExpression = [latitude, longitude]
+        setMarkedPosition(newLocation)
+        setMapKey(prev => prev + 1) // Force map to re-render and adjust bounds
+        setIsGettingLocation(false)
+      },
+      (error) => {
+        let errorMessage = 'Unable to retrieve location'
+        switch(error.code) {
+          case error.PERMISSION_DENIED:
+            errorMessage = 'Location access denied by user'
+            break
+          case error.POSITION_UNAVAILABLE:
+            errorMessage = 'Location information unavailable'
+            break
+          case error.TIMEOUT:
+            errorMessage = 'Location request timed out'
+            break
+        }
+        setLocationError(errorMessage)
+        setIsGettingLocation(false)
+      },
+      {
+        enableHighAccuracy: false,
+        timeout: 15000,
+        maximumAge: 300000
+      }
+    )
+  }
+
   const handleGenProof = async() => {
     console.log("Radius:", radius)
     console.log("Marked Position:", markedPosition)
@@ -40,6 +87,7 @@ export default function Home() {
 
   const handleRemoveMarkedPosition = () => {
     setMarkedPosition(undefined)
+    setMapKey(prev => prev + 1) // Force map to re-render
   }
 
   return (
@@ -63,13 +111,31 @@ export default function Home() {
           />
         </div>
 
+        <Button 
+          onClick={handleGetUserLocation}
+          disabled={isGettingLocation}
+          variant="outline"
+        >
+          <Navigation size={16} className={isGettingLocation ? 'animate-spin' : ''} />
+          {isGettingLocation ? 'หาตำแหน่ง...' : 'หาตำแหน่งของฉัน'}
+        </Button>
+
         <Button onClick={handleRemoveMarkedPosition} disabled={!markedPosition}>
           Remove Marked Position
         </Button>
       </div>
 
+      {locationError && (
+        <div className="flex justify-center">
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded-md text-sm">
+            {locationError}
+          </div>
+        </div>
+      )}
+
       <div className="relative z-0 flex flex-1">
         <MapContainer
+          key={mapKey}
           center={selectedLocation}
           zoom={15}
           markedPosition={markedPosition}
