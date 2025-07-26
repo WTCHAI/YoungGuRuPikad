@@ -17,11 +17,10 @@ const MapContainer = dynamic(() => import("@/components/map/map-container"), {
 
 export default function Home() {
   const selectedLocation = useLocationStore((state) => state.selectedLocation)
-  const [radius, setRadius] = useState<number | undefined>(5) // Default radius in km
+  const [radius, setRadius] = useState<number | undefined>(1) // Default radius in km
   const [markedPosition, setMarkedPosition] = useState<
     LatLngExpression | undefined
   >()
-  const selectedDate = useLocationStore((state) => state.selectedDate)
 
   const handleGenProof = () => {
     console.log("Radius:", radius)
@@ -49,6 +48,7 @@ export default function Home() {
             step="any"
             placeholder="Radius (km)"
             value={radius}
+            min={0}
             onChange={(e) => setRadius(parseFloat(e.target.value))}
           />
         </div>
@@ -64,6 +64,7 @@ export default function Home() {
           zoom={15}
           markedPosition={markedPosition}
           onMarkPositionChange={setMarkedPosition}
+          radius={radius}
         />
       </div>
 

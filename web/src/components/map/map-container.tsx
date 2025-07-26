@@ -2,6 +2,7 @@
 
 import { LatLngExpression } from "leaflet"
 import {
+  Circle,
   MapContainer as LeafletMapContainer,
   Marker,
   Popup,
@@ -39,11 +40,7 @@ type MapContainerProps = {
   zoom?: number
   onMarkPositionChange: (position: LatLngExpression) => void
   markedPosition?: LatLngExpression
-}
-
-type Props = {
-  center: LatLngExpression
-  zoom?: number
+  radius: number
 }
 
 const MapContainer = ({
@@ -51,6 +48,7 @@ const MapContainer = ({
   zoom,
   onMarkPositionChange,
   markedPosition,
+  radius,
 }: MapContainerProps) => {
   return (
     <LeafletMapContainer
@@ -63,15 +61,22 @@ const MapContainer = ({
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={center} icon={customIcon}>
-        <Popup>Selected Location</Popup>
-      </Marker>
+      <div>
+        <Marker position={center} icon={customIcon}>
+          <Popup>Younggu</Popup>
+        </Marker>
+        <Circle
+          center={center}
+          radius={(radius ?? 0) * 1000}
+          pathOptions={{ color: "red", fillOpacity: 0.2 }}
+        />
+      </div>
 
       <MapCenterUpdater center={center} zoom={zoom} />
 
       {markedPosition && (
         <Marker position={markedPosition}>
-          <Popup>Marked Position</Popup>
+          <Popup>Wife Position</Popup>
         </Marker>
       )}
 
