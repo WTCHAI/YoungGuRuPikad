@@ -65,11 +65,13 @@ const MapContainer = ({
         <Marker position={center} icon={customIcon}>
           <Popup>Younggu</Popup>
         </Marker>
-        <Circle
-          center={center}
-          radius={(radius ?? 0) * 1000}
-          pathOptions={{ color: "red", fillOpacity: 0.2 }}
-        />
+        {radius && (
+          <Circle
+            center={center}
+            radius={(radius ?? 0) * 1000}
+            pathOptions={{ color: "red", fillOpacity: 0.2 }}
+          />
+        )}
       </div>
 
       <MapCenterUpdater center={center} zoom={zoom} />
