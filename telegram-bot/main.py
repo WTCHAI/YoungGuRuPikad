@@ -338,6 +338,7 @@ async def notify_proof_subscribers(application: Application, proof_data: dict):
     
     message = (
         f"{emoji} **{status} PROOF**\n\n"
+        f"Younggu is nearby your girlfriend - beware! 🚨😱💀\n\n"
         f"👤 **Prover:** `{prover}`\n"
         f"🕐 **Time:** {timestamp}\n"
         f"📦 **Block:** {block_number}\n"
@@ -422,6 +423,7 @@ async def check_blockchain_notifications(application: Application):
                                             
                                             message = (
                                                 f"{emoji} **{status} PROOF**\n\n"
+                                                f"Younggu is nearby your girlfriend - beware! 🚨😱💀\n\n"
                                                 f"👤 **Prover:** `{prover}`\n"
                                                 f"🕐 **Time:** {timestamp_str}\n"
                                                 f"📦 **Block:** {block_number}\n"
