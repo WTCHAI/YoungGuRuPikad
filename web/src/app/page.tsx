@@ -134,6 +134,7 @@ export default function Home() {
       toast.loading("Confirming transaction...")
     }
     if (isSuccess && hash) {
+      toast.dismiss()
       setVerified(true, hash)
       toast.success(
         <div className="flex flex-col gap-2">
