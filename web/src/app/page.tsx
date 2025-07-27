@@ -19,8 +19,10 @@ import PopoverDatePicker from "@/components/popover-date-picker"
 import { useLocationStore } from "@/store/location"
 import { useProofStore } from "@/store/proof"
 import { GenerateProof } from "@/utils/generating-proof"
+import {latLngToXY} from "@/utils/lat-long-conversion"
 
 import { ContractConfigs } from "../lib/contract"
+import { se } from "date-fns/locale"
 
 const MapContainer = dynamic(() => import("@/components/map/map-container"), {
   loading: () => <div>Loading map...</div>,
@@ -64,15 +66,19 @@ export default function Home() {
       setGenerating(true)
       console.log("Radius:", radius)
       console.log("Marked Position:", markedPosition)
+      let position_x = 0
+      let position_y = 0
+      const { x: target_x, y: target_y } = latLngToXY(markedPosition[0], markedPosition[1], selectedLocation[0], selectedLocation[1])
       console.log("Selected Location:", selectedLocation)
-
+      console.log(Math.sqrt(Math.pow((target_x - position_x), 2) + Math.pow((target_y - position_y), 2)))
+      console.log("Target Position:", { target_x: Math.floor(target_x * 1000).toString(), target_y: Math.floor(target_y * 1000).toString() , radius: Math.floor(radius * Math.pow(1000, 2)).toString()})
       const { proof: generatedProof, publicInputs: generatedPublicInputs } =
         await GenerateProof({
-          position_x: "10",
-          position_y: "1",
-          radius: "10",
-          target_x: "2",
-          target_y: "3",
+          position_x: "0",
+          position_y: "0",
+          radius: Math.floor(radius * Math.pow(1000, 2)).toString(),
+          target_x: Math.abs(Math.floor(target_x * 1000)).toString(),
+          target_y: Math.abs(Math.floor(target_y * 1000)).toString(),
         })
 
       setProof(generatedProof, generatedPublicInputs)
@@ -128,6 +134,7 @@ export default function Home() {
       toast.loading("Confirming transaction...")
     }
     if (isSuccess && hash) {
+      toast.dismiss()
       setVerified(true, hash)
       toast.success(
         <div className="flex flex-col gap-2">
