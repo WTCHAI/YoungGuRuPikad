@@ -21,6 +21,7 @@ import { useProofStore } from "@/store/proof"
 import { GenerateProof } from "@/utils/generating-proof"
 
 import { ContractConfigs } from "../lib/contract"
+import YouTubeBackgroundMusic from "@/components/YouTubeBackgroundMusic";
 
 const MapContainer = dynamic(() => import("@/components/map/map-container"), {
   loading: () => <div>Loading map...</div>,
@@ -160,6 +161,7 @@ export default function Home() {
 
   return (
     <main className="container flex h-screen flex-col space-y-6 p-6">
+       <YouTubeBackgroundMusic />
       <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
         <div className="flex gap-3">
           <Label>Date</Label>
