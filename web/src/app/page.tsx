@@ -47,7 +47,7 @@ export default function Home() {
             type="number"
             step="any"
             placeholder="Radius (km)"
-            value={radius}
+            value={isNaN(radius) ? "" : radius}
             min={0}
             onChange={(e) => setRadius(parseFloat(e.target.value))}
           />
