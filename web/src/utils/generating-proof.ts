@@ -3,7 +3,7 @@ import {
     UltraHonkBackend,
     UltraPlonkBackend,
   } from '@aztec/bb.js'
-  import circuit from '../../../yg-circuit/target/circuit.json'
+  import circuit from '../../circuit.json'
   // @ts-ignore
   import { Noir } from '@noir-lang/noir_js'
   
@@ -22,7 +22,7 @@ import {
         import("@aztec/bb.js"),
       ])
 
-      const circuit = await import("../../../yg-circuit/target/circuit.json")
+      const circuit = await import("../../circuit.json")
       const compiledCircuit = circuit.default as CompiledCircuit
 
       const noir = new Noir(compiledCircuit)

@@ -117,7 +117,7 @@ export default function Home() {
         "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef" as `0x${string}`
       console.log("proof: ", proofHex, publicInputsBytes32)
       const tx = await writeContract(
-        ContractConfigs.verifyMia(key, proofHex, publicInputsBytes32)
+        ContractConfigs.verifyMia(key, proofHex, publicInputsBytes32) as any
       )
       console.log(tx)
 

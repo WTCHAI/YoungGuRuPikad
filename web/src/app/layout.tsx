@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     creator: siteConfig.twitter,
   },
   icons: {
-    icon: siteConfig.favicon,
+    icon: "/younggu.png",
   },
 }
 
