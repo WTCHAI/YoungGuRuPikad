@@ -20,6 +20,7 @@ import { useLocationStore } from "@/store/location"
 import { useProofStore } from "@/store/proof"
 import { GenerateProof } from "@/utils/generating-proof"
 import {latLngToXY} from "@/utils/lat-long-conversion"
+import YouTubeBackgroundMusic from "@/components/background-music";
 
 import { ContractConfigs } from "../lib/contract"
 import { se } from "date-fns/locale"
@@ -167,6 +168,7 @@ export default function Home() {
 
   return (
     <main className="container flex h-screen flex-col space-y-6 p-6">
+      <YouTubeBackgroundMusic />
       <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
         <div className="flex gap-3">
           <Label>Date</Label>
