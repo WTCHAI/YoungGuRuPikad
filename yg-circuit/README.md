@@ -1,6 +1,6 @@
 # YoungGuRuPikad Circuit
 
-[![Noir Lang](https://img.shields.io/badge/Noir%20Lang-1.0.0--beta.6-purple)](https://noir-lang.org/) ![BB](https://img.shields.io/badge/Aztec%20BB.js-0.84.0-orange)
+[![Noir Lang](https://img.shields.io/badge/Noir%20Lang-1.0.0--beta.6-purple)](https://noir-lang.org/) ![BB](https://img.shields.io/badge/BB-0.84.0-orange)
 
 A zero-knowledge proof circuit built with Noir that privately verifies whether a given point lies within a specified circular boundary.
 

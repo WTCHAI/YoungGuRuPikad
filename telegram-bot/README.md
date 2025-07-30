@@ -1,6 +1,6 @@
 # YoungguRuPiKad Bot
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Python](https://img.shields.io/badge/Python-3.8+-blue)](https://www.python.org/) [![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-009688)](https://fastapi.tiangolo.com/) [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-12+-336791)](https://www.postgresql.org/) [![Web3.py](https://img.shields.io/badge/Web3.py-7.12.1-orange)](https://web3py.readthedocs.io/) [![Telegram Bot](https://img.shields.io/badge/Telegram-Bot-26A5E4)](https://python-telegram-bot.org/) [![Docker](https://img.shields.io/badge/Docker-Required-2496ED)](https://www.docker.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Python](https://img.shields.io/badge/Python-3.8+-blue?logo=python)](https://www.python.org/) [![FastAPI](https://img.shields.io/badge/FastAPI-0.104.1-009688?logo=fastapi)](https://fastapi.tiangolo.com/) [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-12+-336791?logo=postgresql)](https://www.postgresql.org/) [![Web3.py](https://img.shields.io/badge/Web3.py-7.12.1-orange?logo=ethereum)](https://web3py.readthedocs.io/) [![Telegram Bot](https://img.shields.io/badge/Telegram-Bot-26A5E4?logo=telegram)](https://python-telegram-bot.org/) [![Docker](https://img.shields.io/badge/Docker-Required-2496ED?logo=docker)](https://www.docker.com/)
 
 A comprehensive Python application featuring a FastAPI backend, PostgreSQL database, blockchain indexer, and Telegram bot integration.
 
@@ -123,7 +123,7 @@ The bot will start polling for messages and handle user interactions through inl
 - `python-telegram-bot` - Telegram Bot API wrapper
 - `uvicorn` - ASGI server for FastAPI
 
-## Environment Variables
+## 🌍 Environment Variables
 
 Create a `.env` file in the root directory with the following variables:
 
@@ -162,3 +162,11 @@ WEBSOCKET_PORT=8765
 - Check that all environment variables are properly set
 - Verify that the required ports are not in use by other services
 - Check logs for each component if issues arise
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+**⚡ Built with passion by the YoungGuRuPikad team**
