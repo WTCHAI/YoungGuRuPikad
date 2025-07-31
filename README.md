@@ -23,7 +23,7 @@ This repository contains the following main components:
 ```
 ┌──────────────┐      ┌──────────────┐      ┌──────────────┐
 │   Frontend   │◀────▶│   Backend    │◀────▶│  Blockchain  │
-│   (web)      │      │ (telegram-bot│      │ (yg-contract│
+│   (web)      │      │ (telegram-bot│      │ (yg-contract │
 └──────────────┘      │   + API)     │      └──────────────┘
         ▲             └──────────────┘              ▲
         │                                           │
